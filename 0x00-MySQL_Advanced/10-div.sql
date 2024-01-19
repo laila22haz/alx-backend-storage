@@ -2,12 +2,13 @@
 
 DELIMITER $$
 CREATE FUNCTION SafeDiv(a INT, b INT) RETURNS
-DECIMAL(10,2)
+FLOAT
 BEGIN
+    DECLARE total;
     IF b = 0 THEN
-        RETURN = 0;
+        total = 0;
     ELSE
-        RETURN  a / b;
+        SET total = a / b;
     END IF;
 END $$
 DELIMITER ;
