@@ -9,6 +9,6 @@ BEGIN
     ELSE
         SET result = a / b;
     END IF;
-    RETURN result
+RETURN result
 END $$
 DELIMITER ;
