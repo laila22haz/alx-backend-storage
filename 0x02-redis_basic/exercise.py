@@ -21,7 +21,8 @@ class Cache:
     def __init__(self):
         self._redis = redis.Redis(host='localhost', port=6379)
         self._redis.flushdb()
-
+    
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Store data in Redis using a random key"""
         key = str(uuid.uuid4())
