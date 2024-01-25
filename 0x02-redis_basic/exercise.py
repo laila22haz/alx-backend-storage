@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Writing strings to Redis"""
+"""Writing strings to Redis class"""
 import redis
 import uuid
-from typing import Union
+from typing import Union, Callable, Optional, List
 
 
 class Cache:
@@ -15,3 +15,19 @@ class Cache:
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Optional[Callable] = None
+            ) -> Union[None, str, bytes, int, float]:
+        """convert the data back to the desired format"""
+        if fn:
+            return fn(self._redis.get(key))
+        data = self._redis.get(key)
+        return data
+
+    def get_str(self, key: str) -> Union[str, None]:
+        """convert the data back to the desired format"""
+        return self.get(key, str)
+
+    def get_int(self, key: str) -> Union[int, None]:
+        """convert the data back to the desired format"""
+        return self.get(key, int)
