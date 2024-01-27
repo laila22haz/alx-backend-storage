@@ -37,6 +37,17 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
+def repaly(qualified_name):
+    """repaly"""
+    input_key = qualified_name + ':inputs'
+    output_key = qualified_name + ':outputs'
+
+    inputs = redis.lrange(input_key, 0, -1)
+    outputs = redis.lrange(output_key, 0, -1)
+    for input, output in zip(inputs, outputs):
+        print(f"{input} -> {output}")
+
+
 class Cache:
     def __init__(self):
         self._redis = redis.Redis(host='localhost', port=6379)
