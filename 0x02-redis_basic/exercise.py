@@ -2,8 +2,8 @@
 """Writing strings to Redis class"""
 import redis
 import uuid
-from functools import wraps
 from typing import Union, Callable, Optional
+from functools import wraps
 
 
 def count_calls(method: Callable) -> Callable:
@@ -22,12 +22,12 @@ def call_history(method: Callable) -> Callable:
     """call_history"""
 
     @wraps(method)
-    def wrapper(self, *args):
+    def wrapper(self, *args, **kwargs):
         """wrapper"""
         input_key = method.__qualname__ + ':inputs'
         self._redis.rpush(input_key, str(args))
 
-        resut = method(self, *args)
+        resut = method(self, *args, **kwargs)
 
         output_key = method.__qualname__ + ':outputs'
 
@@ -37,7 +37,7 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
-def repaly(method: Callable) -> None:
+def replay(method: Callable) -> None:
     """repaly"""
     input_key = "{}:inputs".format(method.__qualname__)
     output_key = "{}:outputs".format(method.__qualname__)
