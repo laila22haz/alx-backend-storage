@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Writing strings to Redis class"""
+
 import redis
 import uuid
 from typing import Union, Callable, Optional
@@ -23,7 +24,7 @@ def call_history(method: Callable) -> Callable:
 
     @wraps(method)
     def wrapper(self, *args, **kwargs):
-        """wrapper"""
+        """wrapper function"""
         input_key = method.__qualname__ + ':inputs'
         self._redis.rpush(input_key, str(args))
 
@@ -38,7 +39,7 @@ def call_history(method: Callable) -> Callable:
 
 
 def replay(method: Callable) -> None:
-    """repaly"""
+    """repaly method"""
     input_key = "{}:inputs".format(method.__qualname__)
     output_key = "{}:outputs".format(method.__qualname__)
 
@@ -55,7 +56,9 @@ def replay(method: Callable) -> None:
 
 
 class Cache:
+    """Cache class"""
     def __init__(self):
+        """init function"""
         self._redis = redis.Redis()
         self._redis.flushdb()
 
