@@ -55,7 +55,7 @@ def repaly(method: Callable) -> None:
 
 class Cache:
     def __init__(self):
-        self._redis = redis.Redis(host='localhost', port=6379)
+        self._redis = redis.Redis()
         self._redis.flushdb()
 
     @count_calls
